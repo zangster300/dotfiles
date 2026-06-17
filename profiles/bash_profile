@@ -1,0 +1,46 @@
+now() {
+  printf "%s" "$(date -u +%FT%H:%M:%SZ)"
+}
+
+alias l="ls --color -FlGh"
+alias ll="ls --color -FlaGh"
+alias fd="fdfind"
+alias gst="git status"
+
+export CDPATH=".:$HOME:$HOME/Projects"
+
+# ble - https://github.com/akinomyoga/ble.sh
+BLE_PATH="$HOME/.local/share/blesh"
+if [ -d "$BLE_PATH" ]; then
+    source -- "$BLE_PATH/ble.sh"
+    ble-bind -m emacs -f 'M-C-?' 'kill-backward-uword'
+fi
+
+# fnm
+FNM_PATH="$HOME/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+    export PATH="$FNM_PATH:$PATH"
+    eval "$(fnm env --use-on-cd --shell bash)"
+fi
+
+# Go
+if [ -d "/usr/local/go" ]; then
+    export GOPATH="$HOME/.local/share/go"
+    export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
+fi
+
+# nvim
+if [ -d "/opt/nvim-linux-arm64/bin" ]; then
+    export PATH="/opt/nvim-linux-arm64/bin:$PATH"
+fi
+
+# odin
+if [ -d "/usr/local/odin" ]; then
+    export PATH="/usr/local/odin:$HOME/.local/share/odin/bin:$PATH"
+fi
+
+# starship - https://github.com/starship/starship
+STARSHIP_PATH="/usr/local/bin/starship"
+if [ -f "$STARSHIP_PATH" ]; then
+    eval "$(starship init bash)"
+fi
