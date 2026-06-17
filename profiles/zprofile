@@ -1,0 +1,34 @@
+now() {
+  printf "%s" "$(date -u +%FT%H:%M:%SZ)"
+}
+
+# emscripten
+export EMSDK_QUIET=1
+source "$HOME/Tooling/emsdk/emsdk_env.sh"
+
+# fnm
+eval "$(fnm env --use-on-cd --shell zsh)"
+
+# homebrew
+alias brewup="brew up; brew upgrade -g; brew cleanup; brew doctor"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Go
+if command -v go >/dev/null; then
+  export GOPATH="$HOME/.local/share/go"
+  export PATH="$GOPATH/bin:$PATH"
+fi
+
+# llama.cpp
+export LLAMA_ARG_PORT=7000
+
+# Odin
+if [ -d "$HOME/.local/share/odin/bin" ]; then
+  export PATH="$HOME/.local/share/odin/bin:$PATH"
+fi
+
+# rust
+export PATH="$(brew --prefix rustup)/bin:$PATH"
+
+# sqlite
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
